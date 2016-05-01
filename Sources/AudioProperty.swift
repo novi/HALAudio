@@ -78,6 +78,24 @@ public enum AudioDeviceProperty {
         public init() {
         }
     }
+    
+    public struct BufferFrameSizeRange: AudioObjectPropertyAddressTypeElementMaster {
+        public typealias PropertyType = AudioValueRange
+        public var propertySelector: AudioObjectPropertySelector {
+            return kAudioDevicePropertyBufferFrameSizeRange
+        }
+        public init() {
+        }
+    }
+    
+    public struct BufferFrameSize: AudioObjectPropertyAddressTypeElementMaster {
+        public typealias PropertyType = UInt32
+        public var propertySelector: AudioObjectPropertySelector {
+            return kAudioDevicePropertyBufferFrameSize
+        }
+        public init() {
+        }
+    }
 }
 
 public enum AudioStreamProperty {

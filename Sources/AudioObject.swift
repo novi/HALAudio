@@ -29,6 +29,8 @@ extension AudioStreamRangedDescription: AudioObjectPropertyType {
 extension pid_t: AudioObjectPropertyType {
 }
 
+extension AudioValueRange: AudioObjectPropertyType {
+}
 
 public enum AudioObjectError: ErrorType {
     case GetPropertyError(code: OSStatus)
