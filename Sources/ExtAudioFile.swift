@@ -66,7 +66,7 @@ public extension ExtAudioFilePropertyType {
         guard status == 0 else {
             throw ExtAudioFilePropertyError.GetPropertyError(prop: prop, code: status)
         }
-        let result = data.memory
+        let result = data[0]
         return result
     }
     

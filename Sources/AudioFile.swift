@@ -24,7 +24,7 @@ extension AudioFilePropertyType {
         guard status == 0 else {
             throw AudioFilePropertyError.GetPropertyError(prop: prop, code: status)
         }
-        let result = data.memory
+        let result = data[0]
         return result
     }
     
