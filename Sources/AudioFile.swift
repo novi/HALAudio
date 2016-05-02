@@ -20,7 +20,7 @@ extension AudioFilePropertyType {
         defer {
             free(data)
         }
-        let status = AudioFileGetProperty(audioFile, prop, &size, &data)
+        let status = AudioFileGetProperty(audioFile, prop, &size, data)
         guard status == 0 else {
             throw AudioFilePropertyError.GetPropertyError(prop: prop, code: status)
         }

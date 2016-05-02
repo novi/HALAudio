@@ -27,5 +27,4 @@ public extension AudioFilePropertyType {
     func estimatedDuration() throws -> Float64 {
         return try getProperty(kAudioFilePropertyEstimatedDuration)
     }
-    
 }

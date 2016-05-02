@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		52459A3B1CD72BC000799E0B /* AudioFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52459A3A1CD72BC000799E0B /* AudioFile.swift */; };
 		52459A3D1CD72DD700799E0B /* AudioFileProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52459A3C1CD72DD700799E0B /* AudioFileProperty.swift */; };
+		52459A3F1CD7334F00799E0B /* ExtAudioFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52459A3E1CD7334F00799E0B /* ExtAudioFile.swift */; };
+		52459A411CD733C700799E0B /* ExtAudioFileProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52459A401CD733C700799E0B /* ExtAudioFileProperty.swift */; };
 		526D96671CC36D1300F1CAFF /* HALAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 526D96661CC36D1300F1CAFF /* HALAudio.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		526D966E1CC36D1300F1CAFF /* HALAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526D96631CC36D1300F1CAFF /* HALAudio.framework */; };
 		526D96731CC36D1300F1CAFF /* HALAudioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D96721CC36D1300F1CAFF /* HALAudioTests.swift */; };
@@ -30,6 +32,8 @@
 /* Begin PBXFileReference section */
 		52459A3A1CD72BC000799E0B /* AudioFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFile.swift; sourceTree = "<group>"; };
 		52459A3C1CD72DD700799E0B /* AudioFileProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFileProperty.swift; sourceTree = "<group>"; };
+		52459A3E1CD7334F00799E0B /* ExtAudioFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtAudioFile.swift; sourceTree = "<group>"; };
+		52459A401CD733C700799E0B /* ExtAudioFileProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtAudioFileProperty.swift; sourceTree = "<group>"; };
 		526D96631CC36D1300F1CAFF /* HALAudio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HALAudio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		526D96661CC36D1300F1CAFF /* HALAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HALAudio.h; sourceTree = "<group>"; };
 		526D96681CC36D1300F1CAFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 				526D967F1CC36D7F00F1CAFF /* AudioObjectProperty.swift */,
 				52459A3A1CD72BC000799E0B /* AudioFile.swift */,
 				52459A3C1CD72DD700799E0B /* AudioFileProperty.swift */,
+				52459A3E1CD7334F00799E0B /* ExtAudioFile.swift */,
+				52459A401CD733C700799E0B /* ExtAudioFileProperty.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -220,6 +226,8 @@
 			files = (
 				52459A3B1CD72BC000799E0B /* AudioFile.swift in Sources */,
 				52459A3D1CD72DD700799E0B /* AudioFileProperty.swift in Sources */,
+				52459A3F1CD7334F00799E0B /* ExtAudioFile.swift in Sources */,
+				52459A411CD733C700799E0B /* ExtAudioFileProperty.swift in Sources */,
 				526D96801CC36D7F00F1CAFF /* AudioObject.swift in Sources */,
 				526D96811CC36D7F00F1CAFF /* AudioObjectProperty.swift in Sources */,
 			);
