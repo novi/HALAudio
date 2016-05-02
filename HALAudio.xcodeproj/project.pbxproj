@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52459A3B1CD72BC000799E0B /* AudioFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52459A3A1CD72BC000799E0B /* AudioFile.swift */; };
+		52459A3D1CD72DD700799E0B /* AudioFileProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52459A3C1CD72DD700799E0B /* AudioFileProperty.swift */; };
 		526D96671CC36D1300F1CAFF /* HALAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 526D96661CC36D1300F1CAFF /* HALAudio.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		526D966E1CC36D1300F1CAFF /* HALAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526D96631CC36D1300F1CAFF /* HALAudio.framework */; };
 		526D96731CC36D1300F1CAFF /* HALAudioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D96721CC36D1300F1CAFF /* HALAudioTests.swift */; };
 		526D96801CC36D7F00F1CAFF /* AudioObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D967E1CC36D7F00F1CAFF /* AudioObject.swift */; };
-		526D96811CC36D7F00F1CAFF /* AudioProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D967F1CC36D7F00F1CAFF /* AudioProperty.swift */; };
+		526D96811CC36D7F00F1CAFF /* AudioObjectProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D967F1CC36D7F00F1CAFF /* AudioObjectProperty.swift */; };
 		526D96831CC36DA600F1CAFF /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526D96821CC36DA600F1CAFF /* CoreAudio.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +28,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52459A3A1CD72BC000799E0B /* AudioFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFile.swift; sourceTree = "<group>"; };
+		52459A3C1CD72DD700799E0B /* AudioFileProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFileProperty.swift; sourceTree = "<group>"; };
 		526D96631CC36D1300F1CAFF /* HALAudio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HALAudio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		526D96661CC36D1300F1CAFF /* HALAudio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HALAudio.h; sourceTree = "<group>"; };
 		526D96681CC36D1300F1CAFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -33,7 +37,7 @@
 		526D96721CC36D1300F1CAFF /* HALAudioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HALAudioTests.swift; sourceTree = "<group>"; };
 		526D96741CC36D1300F1CAFF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		526D967E1CC36D7F00F1CAFF /* AudioObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioObject.swift; sourceTree = "<group>"; };
-		526D967F1CC36D7F00F1CAFF /* AudioProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioProperty.swift; sourceTree = "<group>"; };
+		526D967F1CC36D7F00F1CAFF /* AudioObjectProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioObjectProperty.swift; sourceTree = "<group>"; };
 		526D96821CC36DA600F1CAFF /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -99,7 +103,9 @@
 			isa = PBXGroup;
 			children = (
 				526D967E1CC36D7F00F1CAFF /* AudioObject.swift */,
-				526D967F1CC36D7F00F1CAFF /* AudioProperty.swift */,
+				526D967F1CC36D7F00F1CAFF /* AudioObjectProperty.swift */,
+				52459A3A1CD72BC000799E0B /* AudioFile.swift */,
+				52459A3C1CD72DD700799E0B /* AudioFileProperty.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -212,8 +218,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52459A3B1CD72BC000799E0B /* AudioFile.swift in Sources */,
+				52459A3D1CD72DD700799E0B /* AudioFileProperty.swift in Sources */,
 				526D96801CC36D7F00F1CAFF /* AudioObject.swift in Sources */,
-				526D96811CC36D7F00F1CAFF /* AudioProperty.swift in Sources */,
+				526D96811CC36D7F00F1CAFF /* AudioObjectProperty.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

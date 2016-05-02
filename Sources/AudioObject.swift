@@ -32,7 +32,7 @@ extension pid_t: AudioObjectPropertyDataType {
 extension AudioValueRange: AudioObjectPropertyDataType {
 }
 
-public enum AudioObjectError: ErrorType {
+public enum AudioObjectPropertyError: ErrorType {
     case GetPropertyError(code: OSStatus)
     case SetPropertyError(code: OSStatus)
     case NoPropertyFound
@@ -69,7 +69,7 @@ public extension AudioObjectType {
     
     func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> T.DataType {
         guard let val: T.DataType = try get(addr).first else {
-            throw AudioObjectError.NoPropertyFound
+            throw AudioObjectPropertyError.NoPropertyFound
         }
         return val
     }
@@ -85,7 +85,7 @@ public extension AudioObjectType {
                                                         nil,
                                                         &propSize)
         guard statusSize == OSStatus(0) else {
-            throw AudioObjectError.GetPropertyError(code: statusSize)
+            throw AudioObjectPropertyError.GetPropertyError(code: statusSize)
         }
         
         if propSize == 0 {
@@ -110,7 +110,7 @@ public extension AudioObjectType {
                                                     memory)
         
         guard statusData == OSStatus(0) else {
-            throw AudioObjectError.GetPropertyError(code: statusData)
+            throw AudioObjectPropertyError.GetPropertyError(code: statusData)
         }
         
         return (0..<count).map { memory[$0] }
@@ -146,7 +146,7 @@ public extension AudioObjectType {
                                                 UInt32(propSize),
                                                 memory)
         guard status == OSStatus(0) else {
-            throw AudioObjectError.SetPropertyError(code: status)
+            throw AudioObjectPropertyError.SetPropertyError(code: status)
         }
     }
     
