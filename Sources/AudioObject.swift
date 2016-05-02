@@ -8,28 +8,28 @@
 
 import CoreAudio
 
-public protocol AudioObjectPropertyType {
+public protocol AudioObjectPropertyDataType {
 }
 
-extension UInt32: AudioObjectPropertyType {
+extension UInt32: AudioObjectPropertyDataType {
 }
 
-extension CFString: AudioObjectPropertyType {
+extension CFString: AudioObjectPropertyDataType {
 }
 
-extension Float32: AudioObjectPropertyType {
+extension Float32: AudioObjectPropertyDataType {
 }
 
-extension AudioStreamBasicDescription: AudioObjectPropertyType {
+extension AudioStreamBasicDescription: AudioObjectPropertyDataType {
 }
 
-extension AudioStreamRangedDescription: AudioObjectPropertyType {
+extension AudioStreamRangedDescription: AudioObjectPropertyDataType {
 }
 
-extension pid_t: AudioObjectPropertyType {
+extension pid_t: AudioObjectPropertyDataType {
 }
 
-extension AudioValueRange: AudioObjectPropertyType {
+extension AudioValueRange: AudioObjectPropertyDataType {
 }
 
 public enum AudioObjectError: ErrorType {
@@ -43,7 +43,7 @@ public protocol AudioObjectType: CustomStringConvertible {
 }
 
 public protocol AudioObjectPropertyAddressType {
-    associatedtype PropertyType: AudioObjectPropertyType
+    associatedtype DataType: AudioObjectPropertyDataType
     
     var propertyAddress: AudioObjectPropertyAddress { get }
 }
@@ -67,14 +67,14 @@ public extension AudioObjectPropertyAddressTypeElementMaster {
 
 public extension AudioObjectType {
     
-    func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> T.PropertyType {
-        guard let val: T.PropertyType = try get(addr).first else {
+    func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> T.DataType {
+        guard let val: T.DataType = try get(addr).first else {
             throw AudioObjectError.NoPropertyFound
         }
         return val
     }
     
-    func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> [T.PropertyType] {
+    func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> [T.DataType] {
         
         var propAddr = addr.propertyAddress
         
@@ -92,11 +92,11 @@ public extension AudioObjectType {
             return []
         }
         
-        let count = Int(propSize / UInt32(sizeof(T.PropertyType.self)))
+        let count = Int(propSize / UInt32(sizeof(T.DataType.self)))
         
         //print("prop", propAddr.mSelector, propSize, sizeof(T.self), T.self, count)
         
-        let memory = unsafeBitCast(calloc(1, Int(propSize)), UnsafeMutablePointer<T.PropertyType>.self)
+        let memory = unsafeBitCast(calloc(1, Int(propSize)), UnsafeMutablePointer<T.DataType>.self)
         
         defer {
             free(memory)
@@ -116,19 +116,19 @@ public extension AudioObjectType {
         return (0..<count).map { memory[$0] }
     }
     
-    func set<T: AudioObjectPropertyAddressType>(value: T.PropertyType, addr: T) throws {
+    func set<T: AudioObjectPropertyAddressType>(value: T.DataType, addr: T) throws {
         try set([value], addr: addr)
     }
     
-    func set<T: AudioObjectPropertyAddressType>(values: [T.PropertyType], addr: T) throws {
+    func set<T: AudioObjectPropertyAddressType>(values: [T.DataType], addr: T) throws {
         
         var propAddr = addr.propertyAddress
         
-        let propSize = sizeof(T.PropertyType.self) * values.count
+        let propSize = sizeof(T.DataType.self) * values.count
         
         //print(propSize)
         
-        let memory = unsafeBitCast(calloc(1, Int(propSize)), UnsafeMutablePointer<T.PropertyType>.self)
+        let memory = unsafeBitCast(calloc(1, Int(propSize)), UnsafeMutablePointer<T.DataType>.self)
         
         // prepare values to set to memory that allocated
         for i in 0..<values.count {

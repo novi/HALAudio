@@ -6,7 +6,7 @@
 //  Copyright © 2016 Yusuke Ito. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for HALAudio.
 FOUNDATION_EXPORT double HALAudioVersionNumber;

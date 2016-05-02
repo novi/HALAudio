@@ -10,7 +10,7 @@ import CoreAudio
 
 public enum AudioHardwareProperty {
     public struct Devices: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = AudioDeviceID
+        public typealias DataType = AudioDeviceID
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioHardwarePropertyDevices
         }
@@ -27,7 +27,7 @@ public enum AudioDeviceProperty {
     }
     
     public struct DeviceName: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = CFString
+        public typealias DataType = CFString
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioDevicePropertyDeviceNameCFString
         }
@@ -36,7 +36,7 @@ public enum AudioDeviceProperty {
     }
     
     public struct DeviceUID: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = CFString
+        public typealias DataType = CFString
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioDevicePropertyDeviceUID
         }
@@ -45,7 +45,7 @@ public enum AudioDeviceProperty {
     }
     
     public struct VolumeScalar: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = Float32
+        public typealias DataType = Float32
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioDevicePropertyVolumeScalar
         }
@@ -54,7 +54,7 @@ public enum AudioDeviceProperty {
     }
     
     public struct Streams: AudioObjectPropertyAddressType {
-        public typealias PropertyType = AudioStreamID
+        public typealias DataType = AudioStreamID
         public let scope: AudioObjectPropertyScope
         public var propertyAddress: AudioObjectPropertyAddress {
             return AudioObjectPropertyAddress(mSelector: kAudioDevicePropertyStreams,
@@ -71,7 +71,7 @@ public enum AudioDeviceProperty {
     }
     
     public struct HogMode: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = pid_t
+        public typealias DataType = pid_t
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioDevicePropertyHogMode
         }
@@ -80,7 +80,7 @@ public enum AudioDeviceProperty {
     }
     
     public struct BufferFrameSizeRange: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = AudioValueRange
+        public typealias DataType = AudioValueRange
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioDevicePropertyBufferFrameSizeRange
         }
@@ -89,7 +89,7 @@ public enum AudioDeviceProperty {
     }
     
     public struct BufferFrameSize: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = UInt32
+        public typealias DataType = UInt32
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioDevicePropertyBufferFrameSize
         }
@@ -101,7 +101,7 @@ public enum AudioDeviceProperty {
 public enum AudioStreamProperty {
     
     public struct PhysicalFormat: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = AudioStreamBasicDescription
+        public typealias DataType = AudioStreamBasicDescription
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioStreamPropertyPhysicalFormat
         }
@@ -110,7 +110,7 @@ public enum AudioStreamProperty {
     }
     
     public struct VirtualFormat: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = AudioStreamBasicDescription
+        public typealias DataType = AudioStreamBasicDescription
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioStreamPropertyVirtualFormat
         }
@@ -119,7 +119,7 @@ public enum AudioStreamProperty {
     }
     
     public struct AvailablePhysicalFormats: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = AudioStreamRangedDescription
+        public typealias DataType = AudioStreamRangedDescription
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioStreamPropertyAvailablePhysicalFormats
         }
@@ -128,7 +128,7 @@ public enum AudioStreamProperty {
     }
     
     public struct AvailableVirtualFormats: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = AudioStreamRangedDescription
+        public typealias DataType = AudioStreamRangedDescription
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioStreamPropertyAvailableVirtualFormats
         }
@@ -137,7 +137,7 @@ public enum AudioStreamProperty {
     }
     
     public struct Latency: AudioObjectPropertyAddressTypeElementMaster {
-        public typealias PropertyType = UInt32
+        public typealias DataType = UInt32
         public var propertySelector: AudioObjectPropertySelector {
             return kAudioStreamPropertyLatency
         }
