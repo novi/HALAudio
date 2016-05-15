@@ -14,9 +14,9 @@ public protocol AudioFilePropertyType {
 
 extension AudioFilePropertyType {
     
-    func getProperty<T>(prop: AudioFilePropertyID) throws -> T {
+    func getProperty<T>(_ prop: AudioFilePropertyID) throws -> T {
         var size = UInt32(sizeof(T))
-        var data = unsafeBitCast(calloc(1, Int(size)), UnsafeMutablePointer<T>.self)
+        var data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
         defer {
             free(data)
         }
@@ -28,7 +28,7 @@ extension AudioFilePropertyType {
         return result
     }
     
-    func setProperty<T>(prop: AudioFilePropertyID, data: T) throws {
+    func setProperty<T>(data: T, prop: AudioFilePropertyID) throws {
         let size = UInt32(sizeof(T))
         var buffer = data
         let status = AudioFileSetProperty(audioFile, prop, size, &buffer)

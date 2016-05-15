@@ -8,7 +8,7 @@
 
 import AudioToolbox
 
-public enum ExtAudioFilePropertyError: ErrorType {
+public enum ExtAudioFilePropertyError: ErrorProtocol {
     case GetPropertyError(prop: ExtAudioFilePropertyID, code: OSStatus)
     case SetPropertyError(prop: ExtAudioFilePropertyID, code: OSStatus)
     case NoPropertyFound
@@ -29,7 +29,7 @@ public extension ExtAudioFilePropertyType {
     }
     
     func clientDataFormat(format: AudioStreamBasicDescription) throws {
-        try setProperty(kExtAudioFileProperty_ClientDataFormat, data: format)
+        try setProperty(data: format, prop: kExtAudioFileProperty_ClientDataFormat)
     }
     
     func converterConfig() throws -> NSDictionary? {

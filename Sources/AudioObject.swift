@@ -32,7 +32,7 @@ extension pid_t: AudioObjectPropertyDataType {
 extension AudioValueRange: AudioObjectPropertyDataType {
 }
 
-public enum AudioObjectPropertyError: ErrorType {
+public enum AudioObjectPropertyError: ErrorProtocol {
     case GetPropertyError(code: OSStatus)
     case SetPropertyError(code: OSStatus)
     case NoPropertyFound
@@ -68,7 +68,7 @@ public extension AudioObjectPropertyAddressTypeElementMaster {
 public extension AudioObjectType {
     
     func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> T.DataType {
-        guard let val: T.DataType = try get(addr).first else {
+        guard let val: T.DataType = try get(addr: addr).first else {
             throw AudioObjectPropertyError.NoPropertyFound
         }
         return val
@@ -96,7 +96,7 @@ public extension AudioObjectType {
         
         //print("prop", propAddr.mSelector, propSize, sizeof(T.self), T.self, count)
         
-        let memory = unsafeBitCast(calloc(1, Int(propSize)), UnsafeMutablePointer<T.DataType>.self)
+        let memory = unsafeBitCast(calloc(1, Int(propSize)), to: UnsafeMutablePointer<T.DataType>.self)
         
         defer {
             free(memory)
@@ -116,11 +116,11 @@ public extension AudioObjectType {
         return (0..<count).map { memory[$0] }
     }
     
-    func set<T: AudioObjectPropertyAddressType>(value: T.DataType, addr: T) throws {
-        try set([value], addr: addr)
+    func set<T: AudioObjectPropertyAddressType>(value: T.DataType, forAddr addr: T) throws {
+        try set(values: [value], forAddr: addr)
     }
     
-    func set<T: AudioObjectPropertyAddressType>(values: [T.DataType], addr: T) throws {
+    func set<T: AudioObjectPropertyAddressType>(values: [T.DataType], forAddr addr: T) throws {
         
         var propAddr = addr.propertyAddress
         
@@ -128,7 +128,7 @@ public extension AudioObjectType {
         
         //print(propSize)
         
-        let memory = unsafeBitCast(calloc(1, Int(propSize)), UnsafeMutablePointer<T.DataType>.self)
+        let memory = unsafeBitCast(calloc(1, Int(propSize)), to: UnsafeMutablePointer<T.DataType>.self)
         
         // prepare values to set to memory that allocated
         for i in 0..<values.count {
