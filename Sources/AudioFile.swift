@@ -22,7 +22,7 @@ extension AudioFilePropertyType {
         }
         let status = AudioFileGetProperty(audioFile, prop, &size, data)
         guard status == 0 else {
-            throw AudioFilePropertyError.GetPropertyError(prop: prop, code: status)
+            throw AudioFilePropertyError.getPropertyError(prop: prop, code: status)
         }
         let result = data[0]
         return result
@@ -33,7 +33,7 @@ extension AudioFilePropertyType {
         var buffer = data
         let status = AudioFileSetProperty(audioFile, prop, size, &buffer)
         guard status == 0 else {
-            throw AudioFilePropertyError.SetPropertyError(prop: prop, code: status)
+            throw AudioFilePropertyError.setPropertyError(prop: prop, code: status)
         }
     }
 }

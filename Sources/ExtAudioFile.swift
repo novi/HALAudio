@@ -64,7 +64,7 @@ public extension ExtAudioFilePropertyType {
         }
         let status = ExtAudioFileGetProperty(audioFile, prop, &size, data)
         guard status == 0 else {
-            throw ExtAudioFilePropertyError.GetPropertyError(prop: prop, code: status)
+            throw ExtAudioFilePropertyError.getPropertyError(prop: prop, code: status)
         }
         let result = data[0]
         return result
@@ -75,7 +75,7 @@ public extension ExtAudioFilePropertyType {
         var buffer = data
         let status = ExtAudioFileSetProperty(audioFile, prop, size, &buffer)
         guard status == 0 else {
-            throw ExtAudioFilePropertyError.SetPropertyError(prop: prop, code: status)
+            throw ExtAudioFilePropertyError.setPropertyError(prop: prop, code: status)
         }
     }
 }

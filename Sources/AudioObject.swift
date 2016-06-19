@@ -33,9 +33,9 @@ extension AudioValueRange: AudioObjectPropertyDataType {
 }
 
 public enum AudioObjectPropertyError: ErrorProtocol {
-    case GetPropertyError(code: OSStatus)
-    case SetPropertyError(code: OSStatus)
-    case NoPropertyFound
+    case getPropertyError(code: OSStatus)
+    case setPropertyError(code: OSStatus)
+    case noPropertyFound
 }
 
 public protocol AudioObjectType: CustomStringConvertible {
@@ -69,7 +69,7 @@ public extension AudioObjectType {
     
     func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> T.DataType {
         guard let val: T.DataType = try get(addr: addr).first else {
-            throw AudioObjectPropertyError.NoPropertyFound
+            throw AudioObjectPropertyError.noPropertyFound
         }
         return val
     }
@@ -85,7 +85,7 @@ public extension AudioObjectType {
                                                         nil,
                                                         &propSize)
         guard statusSize == OSStatus(0) else {
-            throw AudioObjectPropertyError.GetPropertyError(code: statusSize)
+            throw AudioObjectPropertyError.getPropertyError(code: statusSize)
         }
         
         if propSize == 0 {
@@ -110,7 +110,7 @@ public extension AudioObjectType {
                                                     memory)
         
         guard statusData == OSStatus(0) else {
-            throw AudioObjectPropertyError.GetPropertyError(code: statusData)
+            throw AudioObjectPropertyError.getPropertyError(code: statusData)
         }
         
         return (0..<count).map { memory[$0] }
@@ -146,7 +146,7 @@ public extension AudioObjectType {
                                                 UInt32(propSize),
                                                 memory)
         guard status == OSStatus(0) else {
-            throw AudioObjectPropertyError.SetPropertyError(code: status)
+            throw AudioObjectPropertyError.setPropertyError(code: status)
         }
     }
     
