@@ -12,11 +12,15 @@ public protocol AudioFileStreamPropertyType {
     var audioStream: AudioFileStreamID { get }
 }
 
+public enum AudioFileStreamError: ErrorProtocol {
+    case openError(OSStatus)
+}
+
 extension AudioFileStreamPropertyType {
     
     func getProperty<T>(_ prop: AudioFileStreamPropertyID) throws -> T {
         guard let val: T = try getPropertyArray(prop).first else {
-            throw AudioFileStreamPropertyError.noPropertyFound
+            throw AudioFileStreamPropertyError.noPropertyFound(prop: prop)
         }
         return val
     }

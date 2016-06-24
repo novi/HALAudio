@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		520D28771D1AB16C00171F41 /* AudioConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520D28761D1AB16C00171F41 /* AudioConverter.swift */; };
+		520D28791D1ABF4300171F41 /* AudioConverterProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520D28781D1ABF4300171F41 /* AudioConverterProperty.swift */; };
 		52459A3B1CD72BC000799E0B /* AudioFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52459A3A1CD72BC000799E0B /* AudioFile.swift */; };
 		52459A3D1CD72DD700799E0B /* AudioFileProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52459A3C1CD72DD700799E0B /* AudioFileProperty.swift */; };
 		52459A3F1CD7334F00799E0B /* ExtAudioFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52459A3E1CD7334F00799E0B /* ExtAudioFile.swift */; };
@@ -32,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		520D28761D1AB16C00171F41 /* AudioConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioConverter.swift; sourceTree = "<group>"; };
+		520D28781D1ABF4300171F41 /* AudioConverterProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioConverterProperty.swift; sourceTree = "<group>"; };
 		52459A3A1CD72BC000799E0B /* AudioFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFile.swift; sourceTree = "<group>"; };
 		52459A3C1CD72DD700799E0B /* AudioFileProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFileProperty.swift; sourceTree = "<group>"; };
 		52459A3E1CD7334F00799E0B /* ExtAudioFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtAudioFile.swift; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 				52459A401CD733C700799E0B /* ExtAudioFileProperty.swift */,
 				52641C7E1D16E29C00025612 /* AudioFileStream.swift */,
 				52641C801D16E2A900025612 /* AudioFileStreamProperty.swift */,
+				520D28761D1AB16C00171F41 /* AudioConverter.swift */,
+				520D28781D1ABF4300171F41 /* AudioConverterProperty.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -232,7 +238,9 @@
 			files = (
 				52459A3B1CD72BC000799E0B /* AudioFile.swift in Sources */,
 				52459A3D1CD72DD700799E0B /* AudioFileProperty.swift in Sources */,
+				520D28791D1ABF4300171F41 /* AudioConverterProperty.swift in Sources */,
 				52459A3F1CD7334F00799E0B /* ExtAudioFile.swift in Sources */,
+				520D28771D1AB16C00171F41 /* AudioConverter.swift in Sources */,
 				52641C811D16E2A900025612 /* AudioFileStreamProperty.swift in Sources */,
 				52641C7F1D16E29C00025612 /* AudioFileStream.swift in Sources */,
 				52459A411CD733C700799E0B /* ExtAudioFileProperty.swift in Sources */,
