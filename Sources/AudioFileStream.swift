@@ -12,7 +12,7 @@ public protocol AudioFileStreamPropertyType {
     var audioStream: AudioFileStreamID { get }
 }
 
-public enum AudioFileStreamError: ErrorProtocol {
+public enum AudioFileStreamError: Error {
     case openError(OSStatus)
 }
 
@@ -43,13 +43,13 @@ extension AudioFileStreamPropertyType {
             throw AudioFileStreamPropertyError.getPropertyError(prop: prop, code: dataStatus)
         }
         
-        let count = Int(dataSize / UInt32(sizeof(T)))
+        let count = Int(dataSize / UInt32(MemoryLayout<T>.size))
         
         return (0..<count).map { data[$0] }
     }
     
     func setProperty<T>(data: T, prop: AudioFileStreamPropertyID) throws {
-        let size = UInt32(sizeof(T))
+        let size = UInt32(MemoryLayout<T>.size)
         var buffer = data
         let status = AudioFileStreamSetProperty(audioStream, prop, size, &buffer)
         guard status == 0 else {

@@ -12,7 +12,7 @@ public protocol AudioConverterType {
     var converter: AudioConverterRef { get }
 }
 
-public enum AudioConverterError: ErrorProtocol {
+public enum AudioConverterError: Error {
     case createError(OSStatus)
 }
 
@@ -48,13 +48,13 @@ extension AudioConverterPropertyType {
             throw AudioConverterPropertyError.getPropertyError(prop: prop, code: dataStatus)
         }
         
-        let count = Int(dataSize / UInt32(sizeof(T)))
+        let count = Int(dataSize / UInt32(MemoryLayout<T>.size))
         
         return (0..<count).map { data[$0] }
     }
     
     func setProperty<T>(data: T, prop: AudioConverterPropertyID) throws {
-        let size = UInt32(sizeof(T))
+        let size = UInt32(MemoryLayout<T>.size)
         var buffer = data
         let status = AudioConverterSetProperty(converter, prop, size, &buffer)
         guard status == 0 else {

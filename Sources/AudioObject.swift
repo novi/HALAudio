@@ -32,7 +32,7 @@ extension pid_t: AudioObjectPropertyDataType {
 extension AudioValueRange: AudioObjectPropertyDataType {
 }
 
-public enum AudioObjectPropertyError: ErrorProtocol {
+public enum AudioObjectPropertyError: Error {
     case getPropertyError(code: OSStatus)
     case setPropertyError(code: OSStatus)
     case noPropertyFound
@@ -92,7 +92,7 @@ public extension AudioObjectType {
             return []
         }
         
-        let count = Int(propSize / UInt32(sizeof(T.DataType.self)))
+        let count = Int(propSize / UInt32(MemoryLayout<T.DataType>.size))
         
         //print("prop", propAddr.mSelector, propSize, sizeof(T.self), T.self, count)
         
@@ -124,7 +124,7 @@ public extension AudioObjectType {
         
         var propAddr = addr.propertyAddress
         
-        let propSize = sizeof(T.DataType.self) * values.count
+        let propSize = MemoryLayout<T.DataType>.size * values.count
         
         //print(propSize)
         

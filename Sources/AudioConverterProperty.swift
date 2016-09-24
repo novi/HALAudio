@@ -9,7 +9,7 @@
 import AudioToolbox
 
 
-public enum AudioConverterPropertyError: ErrorProtocol {
+public enum AudioConverterPropertyError: Error {
     case getPropertyError(prop: AudioConverterPropertyID, code: OSStatus)
     case setPropertyError(prop: AudioConverterPropertyID, code: OSStatus)
     case noPropertyFound(prop: AudioConverterPropertyID)

@@ -16,7 +16,7 @@ public protocol ExtAudioFileType {
     var audioFile: ExtAudioFileRef { get }
 }
 
-public enum ExtAudioFileError: ErrorProtocol {
+public enum ExtAudioFileError: Error {
     case urlOpenError(NSURL, OSStatus)
     case readError(OSStatus)
     case seekError(OSStatus)
@@ -27,7 +27,7 @@ public extension ExtAudioFileType {
     static func open(fromURL url: NSURL) throws -> ExtAudioFileRef {
         var ptr: ExtAudioFileRef? = nil
         let status = ExtAudioFileOpenURL(url as CFURL, &ptr)
-        guard let newPtr = ptr where status == 0 else {
+        guard let newPtr = ptr, status == 0 else {
             throw ExtAudioFileError.urlOpenError(url, status)
         }
         return newPtr
@@ -57,7 +57,7 @@ public extension ExtAudioFileType {
 
 public extension ExtAudioFilePropertyType {
     func getProperty<T>(_ prop: ExtAudioFilePropertyID) throws -> T {
-        var size = UInt32(sizeof(T))
+        var size = UInt32(MemoryLayout<T>.size)
         var data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
         defer {
             free(data)
@@ -71,7 +71,7 @@ public extension ExtAudioFilePropertyType {
     }
     
     func setProperty<T>(data: T, prop: ExtAudioFilePropertyID) throws {
-        let size = UInt32(sizeof(T))
+        let size = UInt32(MemoryLayout<T>.size)
         var buffer = data
         let status = ExtAudioFileSetProperty(audioFile, prop, size, &buffer)
         guard status == 0 else {

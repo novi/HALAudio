@@ -8,7 +8,7 @@
 
 import AudioToolbox
 
-public enum AudioFilePropertyError: ErrorProtocol {
+public enum AudioFilePropertyError: Error {
     case getPropertyError(prop: AudioFilePropertyID, code: OSStatus)
     case setPropertyError(prop: AudioFilePropertyID, code: OSStatus)
     case noPropertyFound
