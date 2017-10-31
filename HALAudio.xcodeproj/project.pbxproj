@@ -21,6 +21,8 @@
 		526D96801CC36D7F00F1CAFF /* AudioObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D967E1CC36D7F00F1CAFF /* AudioObject.swift */; };
 		526D96811CC36D7F00F1CAFF /* AudioObjectProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526D967F1CC36D7F00F1CAFF /* AudioObjectProperty.swift */; };
 		526D96831CC36DA600F1CAFF /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526D96821CC36DA600F1CAFF /* CoreAudio.framework */; };
+		52C63C2F1FA86ECB008D8E39 /* AudioFileGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C63C2E1FA86ECB008D8E39 /* AudioFileGlobal.swift */; };
+		52C63C311FA872AC008D8E39 /* AudioFileGlobalProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C63C301FA872AC008D8E39 /* AudioFileGlobalProperty.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		526D967E1CC36D7F00F1CAFF /* AudioObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioObject.swift; sourceTree = "<group>"; };
 		526D967F1CC36D7F00F1CAFF /* AudioObjectProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioObjectProperty.swift; sourceTree = "<group>"; };
 		526D96821CC36DA600F1CAFF /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		52C63C2E1FA86ECB008D8E39 /* AudioFileGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileGlobal.swift; sourceTree = "<group>"; };
+		52C63C301FA872AC008D8E39 /* AudioFileGlobalProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileGlobalProperty.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,8 @@
 				52641C801D16E2A900025612 /* AudioFileStreamProperty.swift */,
 				520D28761D1AB16C00171F41 /* AudioConverter.swift */,
 				520D28781D1ABF4300171F41 /* AudioConverterProperty.swift */,
+				52C63C2E1FA86ECB008D8E39 /* AudioFileGlobal.swift */,
+				52C63C301FA872AC008D8E39 /* AudioFileGlobalProperty.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -243,8 +249,10 @@
 				520D28791D1ABF4300171F41 /* AudioConverterProperty.swift in Sources */,
 				52459A3F1CD7334F00799E0B /* ExtAudioFile.swift in Sources */,
 				520D28771D1AB16C00171F41 /* AudioConverter.swift in Sources */,
+				52C63C2F1FA86ECB008D8E39 /* AudioFileGlobal.swift in Sources */,
 				52641C811D16E2A900025612 /* AudioFileStreamProperty.swift in Sources */,
 				52641C7F1D16E29C00025612 /* AudioFileStream.swift in Sources */,
+				52C63C311FA872AC008D8E39 /* AudioFileGlobalProperty.swift in Sources */,
 				52459A411CD733C700799E0B /* ExtAudioFileProperty.swift in Sources */,
 				526D96801CC36D7F00F1CAFF /* AudioObject.swift in Sources */,
 				526D96811CC36D7F00F1CAFF /* AudioObjectProperty.swift in Sources */,
