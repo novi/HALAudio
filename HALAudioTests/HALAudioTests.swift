@@ -9,7 +9,7 @@
 import XCTest
 @testable import HALAudio
 
-class HALAudioTests: XCTestCase {
+final class HALAudioTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

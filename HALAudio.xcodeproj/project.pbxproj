@@ -23,6 +23,7 @@
 		526D96831CC36DA600F1CAFF /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526D96821CC36DA600F1CAFF /* CoreAudio.framework */; };
 		52C63C2F1FA86ECB008D8E39 /* AudioFileGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C63C2E1FA86ECB008D8E39 /* AudioFileGlobal.swift */; };
 		52C63C311FA872AC008D8E39 /* AudioFileGlobalProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C63C301FA872AC008D8E39 /* AudioFileGlobalProperty.swift */; };
+		52C63C3A1FA87894008D8E39 /* AudioFileGlobalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C63C391FA87894008D8E39 /* AudioFileGlobalTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		526D96821CC36DA600F1CAFF /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		52C63C2E1FA86ECB008D8E39 /* AudioFileGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileGlobal.swift; sourceTree = "<group>"; };
 		52C63C301FA872AC008D8E39 /* AudioFileGlobalProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileGlobalProperty.swift; sourceTree = "<group>"; };
+		52C63C391FA87894008D8E39 /* AudioFileGlobalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileGlobalTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				526D96721CC36D1300F1CAFF /* HALAudioTests.swift */,
+				52C63C391FA87894008D8E39 /* AudioFileGlobalTests.swift */,
 				526D96741CC36D1300F1CAFF /* Info.plist */,
 			);
 			path = HALAudioTests;
@@ -264,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				526D96731CC36D1300F1CAFF /* HALAudioTests.swift in Sources */,
+				52C63C3A1FA87894008D8E39 /* AudioFileGlobalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

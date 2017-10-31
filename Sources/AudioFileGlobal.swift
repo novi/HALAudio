@@ -8,27 +8,31 @@
 
 import AudioToolbox
 
-public protocol AudioFileGlobalPropertyType {
-    associatedtype DataType
+public protocol AudioFileGlobalProperty {
+    //associatedtype DataType
+    associatedtype RawDataType
     associatedtype SpecifierType
     var propertyID: AudioFilePropertyID { get }
     var specifier: SpecifierType? { get }
     var specifierSize: Int { get }
+    
+    func get() throws -> Self.RawDataType
 }
 
 public enum AudioFileGlobalError: Error {
-    case getPropertyNoDataError
+    case getPropertyNoData
     case getPropertyError(code: OSStatus)
+    //case propertyDataCastError(data: Any, toType: Any)
 }
 
-public final class AudioFileGlobal {
+extension AudioFileGlobalProperty {
 
-    public static func get<T: AudioFileGlobalPropertyType>(_ prop: T) throws -> T.DataType {
+    public func get() throws -> Self.RawDataType {
         
         var outDataSize: UInt32 = 0
-        var specifierIn = prop.specifier
-        let statusSize = AudioFileGetGlobalInfoSize(prop.propertyID,
-                                                    UInt32(prop.specifierSize),
+        var specifierIn = specifier
+        let statusSize = AudioFileGetGlobalInfoSize(propertyID,
+                                                    UInt32(specifierSize),
                                                     &specifierIn,
                                                     &outDataSize)
         guard statusSize == OSStatus(0) else {
@@ -36,17 +40,17 @@ public final class AudioFileGlobal {
         }
         
         if outDataSize == 0 {
-            throw AudioFileGlobalError.getPropertyNoDataError
+            throw AudioFileGlobalError.getPropertyNoData
         }
         
-        let memory = unsafeBitCast(calloc(1, Int(outDataSize)), to: UnsafeMutablePointer<T.DataType>.self)
+        let memory = unsafeBitCast(calloc(1, Int(outDataSize)), to: UnsafeMutablePointer<Self.RawDataType>.self)
         
         defer {
             free(memory)
         }
         
-        let statusData = AudioFileGetGlobalInfo(prop.propertyID,
-                                                UInt32(prop.specifierSize),
+        let statusData = AudioFileGetGlobalInfo(propertyID,
+                                                UInt32(specifierSize),
                                                 &specifierIn,
                                                 &outDataSize,
                                                 memory)
@@ -55,6 +59,9 @@ public final class AudioFileGlobal {
             throw AudioFileGlobalError.getPropertyError(code: statusData)
         }
         
+        /*guard let data = memory.pointee as? Self.DataType else {
+            throw AudioFileGlobalError.propertyDataCastError(data: memory.pointee, toType: Self.DataType.self)
+        }*/
         return memory.pointee
     }
 
