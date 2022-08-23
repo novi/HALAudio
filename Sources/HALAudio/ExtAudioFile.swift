@@ -58,7 +58,7 @@ public extension ExtAudioFileType {
 public extension ExtAudioFilePropertyType {
     func getProperty<T>(_ prop: ExtAudioFilePropertyID) throws -> T {
         var size = UInt32(MemoryLayout<T>.size)
-        var data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
+        let data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
         defer {
             free(data)
         }
