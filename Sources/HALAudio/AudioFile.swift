@@ -16,7 +16,7 @@ extension AudioFilePropertyType {
     
     func getProperty<T>(_ prop: AudioFilePropertyID) throws -> T {
         var size = UInt32(MemoryLayout<T>.size)
-        var data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
+        let data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
         defer {
             free(data)
         }

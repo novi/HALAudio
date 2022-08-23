@@ -33,7 +33,7 @@ extension AudioFileStreamPropertyType {
             throw AudioFileStreamPropertyError.getPropertyError(prop: prop, code: sizeStatus)
         }
 
-        var data = unsafeBitCast(calloc(1, Int(dataSize)), to: UnsafeMutablePointer<T>.self)
+        let data = unsafeBitCast(calloc(1, Int(dataSize)), to: UnsafeMutablePointer<T>.self)
         defer {
             free(data)
         }
