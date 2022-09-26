@@ -18,18 +18,22 @@ public enum AudioFileStreamPropertyError: Error {
 extension AudioFileStreamPropertyType {
     
     
+    @AudioFileStreamActor
     public func fileFormat() throws -> UInt32 {
         return try getProperty(kAudioFileStreamProperty_FileFormat)
     }
     
+    @AudioFileStreamActor
     public func dataFormat() throws -> AudioStreamBasicDescription {
         return try getProperty(kAudioFileStreamProperty_DataFormat)
     }
     
+    @AudioFileStreamActor
     public func magicCookie() throws -> [UInt8] {
         return try getPropertyArray(kAudioFileStreamProperty_MagicCookieData)
     }
     
+    @AudioFileStreamActor
     public func audioDataByteCount() throws -> UInt64 {
         return try getProperty(kAudioFileStreamProperty_AudioDataByteCount)
     }

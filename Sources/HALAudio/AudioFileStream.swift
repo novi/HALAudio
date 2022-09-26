@@ -8,8 +8,15 @@
 
 import AudioToolbox
 
+@globalActor
+public struct AudioFileStreamActor {
+  public actor Actor {}
+  public static let shared = Actor()
+}
+
+
 public protocol AudioFileStreamPropertyType {
-    var audioStream: AudioFileStreamID { get }
+    @AudioFileStreamActor var audioStream: AudioFileStreamID { get }
 }
 
 public enum AudioFileStreamError: Error {
@@ -18,12 +25,15 @@ public enum AudioFileStreamError: Error {
 
 extension AudioFileStreamPropertyType {
     
+    @AudioFileStreamActor
     func getProperty<T>(_ prop: AudioFileStreamPropertyID) throws -> T {
         guard let val: T = try getPropertyArray(prop).first else {
             throw AudioFileStreamPropertyError.noPropertyFound(prop: prop)
         }
         return val
     }
+    
+    @AudioFileStreamActor
     func getPropertyArray<T>(_ prop: AudioFileStreamPropertyID) throws -> [T] {
         
         var dataSize: UInt32 = 0
@@ -48,6 +58,7 @@ extension AudioFileStreamPropertyType {
         return (0..<count).map { data[$0] }
     }
     
+    @AudioFileStreamActor
     func setProperty<T>(data: T, prop: AudioFileStreamPropertyID) throws {
         let size = UInt32(MemoryLayout<T>.size)
         var buffer = data
