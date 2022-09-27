@@ -10,10 +10,12 @@ import AudioToolbox
 
 public protocol ExtAudioFilePropertyType {
     var audioFile: ExtAudioFileRef { get }
+    var lock: UnfairLock { get }
 }
 
 public protocol ExtAudioFileType {
     var audioFile: ExtAudioFileRef { get }
+    // TODO: locking
 }
 
 public enum ExtAudioFileError: Error {
@@ -57,25 +59,29 @@ public extension ExtAudioFileType {
 
 public extension ExtAudioFilePropertyType {
     func getProperty<T>(_ prop: ExtAudioFilePropertyID) throws -> T {
-        var size = UInt32(MemoryLayout<T>.size)
-        let data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
-        defer {
-            free(data)
+        try lock.sync {
+            var size = UInt32(MemoryLayout<T>.size)
+            let data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
+            defer {
+                free(data)
+            }
+            let status = ExtAudioFileGetProperty(audioFile, prop, &size, data)
+            guard status == 0 else {
+                throw ExtAudioFilePropertyError.getPropertyError(prop: prop, code: status)
+            }
+            let result = data[0]
+            return result
         }
-        let status = ExtAudioFileGetProperty(audioFile, prop, &size, data)
-        guard status == 0 else {
-            throw ExtAudioFilePropertyError.getPropertyError(prop: prop, code: status)
-        }
-        let result = data[0]
-        return result
     }
     
     func setProperty<T>(data: T, prop: ExtAudioFilePropertyID) throws {
-        let size = UInt32(MemoryLayout<T>.size)
-        var buffer = data
-        let status = ExtAudioFileSetProperty(audioFile, prop, size, &buffer)
-        guard status == 0 else {
-            throw ExtAudioFilePropertyError.setPropertyError(prop: prop, code: status)
+        try lock.sync {
+            let size = UInt32(MemoryLayout<T>.size)
+            var buffer = data
+            let status = ExtAudioFileSetProperty(audioFile, prop, size, &buffer)
+            guard status == 0 else {
+                throw ExtAudioFilePropertyError.setPropertyError(prop: prop, code: status)
+            }
         }
     }
 }

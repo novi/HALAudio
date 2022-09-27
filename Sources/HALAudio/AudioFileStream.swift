@@ -10,6 +10,7 @@ import AudioToolbox
 
 public protocol AudioFileStreamPropertyType {
     var audioStream: AudioFileStreamID { get }
+    var lock: UnfairLock { get }
 }
 
 public enum AudioFileStreamError: Error {
@@ -25,35 +26,38 @@ extension AudioFileStreamPropertyType {
         return val
     }
     func getPropertyArray<T>(_ prop: AudioFileStreamPropertyID) throws -> [T] {
-        
-        var dataSize: UInt32 = 0
-        var writable: DarwinBoolean = false
-        let sizeStatus = AudioFileStreamGetPropertyInfo(audioStream, prop, &dataSize, &writable)
-        guard sizeStatus == 0 else {
-            throw AudioFileStreamPropertyError.getPropertyError(prop: prop, code: sizeStatus)
-        }
+        try lock.sync {
+            var dataSize: UInt32 = 0
+            var writable: DarwinBoolean = false
+            let sizeStatus = AudioFileStreamGetPropertyInfo(audioStream, prop, &dataSize, &writable)
+            guard sizeStatus == 0 else {
+                throw AudioFileStreamPropertyError.getPropertyError(prop: prop, code: sizeStatus)
+            }
 
-        let data = unsafeBitCast(calloc(1, Int(dataSize)), to: UnsafeMutablePointer<T>.self)
-        defer {
-            free(data)
+            let data = unsafeBitCast(calloc(1, Int(dataSize)), to: UnsafeMutablePointer<T>.self)
+            defer {
+                free(data)
+            }
+            
+            let dataStatus = AudioFileStreamGetProperty(audioStream, prop, &dataSize, data)
+            guard dataStatus == 0 else {
+                throw AudioFileStreamPropertyError.getPropertyError(prop: prop, code: dataStatus)
+            }
+            
+            let count = Int(dataSize / UInt32(MemoryLayout<T>.size))
+            
+            return (0..<count).map { data[$0] }
         }
-        
-        let dataStatus = AudioFileStreamGetProperty(audioStream, prop, &dataSize, data)
-        guard dataStatus == 0 else {
-            throw AudioFileStreamPropertyError.getPropertyError(prop: prop, code: dataStatus)
-        }
-        
-        let count = Int(dataSize / UInt32(MemoryLayout<T>.size))
-        
-        return (0..<count).map { data[$0] }
     }
     
     func setProperty<T>(data: T, prop: AudioFileStreamPropertyID) throws {
-        let size = UInt32(MemoryLayout<T>.size)
-        var buffer = data
-        let status = AudioFileStreamSetProperty(audioStream, prop, size, &buffer)
-        guard status == 0 else {
-            throw AudioFileStreamPropertyError.setPropertyError(prop: prop, code: status)
+        try lock.sync {
+            let size = UInt32(MemoryLayout<T>.size)
+            var buffer = data
+            let status = AudioFileStreamSetProperty(audioStream, prop, size, &buffer)
+            guard status == 0 else {
+                throw AudioFileStreamPropertyError.setPropertyError(prop: prop, code: status)
+            }
         }
     }
 }

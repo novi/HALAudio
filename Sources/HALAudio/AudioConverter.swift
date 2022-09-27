@@ -10,6 +10,7 @@ import AudioToolbox
 
 public protocol AudioConverterType {
     var converter: AudioConverterRef { get }
+    // var lock: UnfairLock { get }
 }
 
 public enum AudioConverterError: Error {
@@ -18,6 +19,7 @@ public enum AudioConverterError: Error {
 
 public protocol AudioConverterPropertyType {
     var converter: AudioConverterRef { get }
+    var lock: UnfairLock { get }
 }
 
 
@@ -30,43 +32,48 @@ extension AudioConverterPropertyType {
         return val
     }
     func getPropertyArray<T>(_ prop: AudioConverterPropertyID) throws -> [T] {
-        
-        var dataSize: UInt32 = 0
-        var writable: DarwinBoolean = false
-        let sizeStatus = AudioConverterGetPropertyInfo(converter, prop, &dataSize, &writable)
-        guard sizeStatus == 0 else {
-            throw AudioConverterPropertyError.getPropertyError(prop: prop, code: sizeStatus)
+        try lock.sync {
+            var dataSize: UInt32 = 0
+            var writable: DarwinBoolean = false
+            let sizeStatus = AudioConverterGetPropertyInfo(converter, prop, &dataSize, &writable)
+            guard sizeStatus == 0 else {
+                throw AudioConverterPropertyError.getPropertyError(prop: prop, code: sizeStatus)
+            }
+            
+            let data = unsafeBitCast(calloc(1, Int(dataSize)), to: UnsafeMutablePointer<T>.self)
+            defer {
+                free(data)
+            }
+            
+            let dataStatus = AudioConverterGetProperty(converter, prop, &dataSize, data)
+            guard dataStatus == 0 else {
+                throw AudioConverterPropertyError.getPropertyError(prop: prop, code: dataStatus)
+            }
+            
+            let count = Int(dataSize / UInt32(MemoryLayout<T>.size))
+            
+            return (0..<count).map { data[$0] }
         }
-        
-        let data = unsafeBitCast(calloc(1, Int(dataSize)), to: UnsafeMutablePointer<T>.self)
-        defer {
-            free(data)
-        }
-        
-        let dataStatus = AudioConverterGetProperty(converter, prop, &dataSize, data)
-        guard dataStatus == 0 else {
-            throw AudioConverterPropertyError.getPropertyError(prop: prop, code: dataStatus)
-        }
-        
-        let count = Int(dataSize / UInt32(MemoryLayout<T>.size))
-        
-        return (0..<count).map { data[$0] }
     }
     
     func setProperty<T>(data: T, prop: AudioConverterPropertyID) throws {
-        let size = UInt32(MemoryLayout<T>.size)
-        var buffer = data
-        let status = AudioConverterSetProperty(converter, prop, size, &buffer)
-        guard status == 0 else {
-            throw AudioConverterPropertyError.setPropertyError(prop: prop, code: status)
+        try lock.sync {
+            let size = UInt32(MemoryLayout<T>.size)
+            var buffer = data
+            let status = AudioConverterSetProperty(converter, prop, size, &buffer)
+            guard status == 0 else {
+                throw AudioConverterPropertyError.setPropertyError(prop: prop, code: status)
+            }
         }
     }
     
     func setProperty(bytes: [UInt8], prop: AudioConverterPropertyID) throws {
-        var buffer = bytes
-        let status = AudioConverterSetProperty(converter, prop, UInt32(bytes.count), &buffer)
-        guard status == 0 else {
-            throw AudioConverterPropertyError.setPropertyError(prop: prop, code: status)
+        try lock.sync {
+            var buffer = bytes
+            let status = AudioConverterSetProperty(converter, prop, UInt32(bytes.count), &buffer)
+            guard status == 0 else {
+                throw AudioConverterPropertyError.setPropertyError(prop: prop, code: status)
+            }
         }
     }
 }
