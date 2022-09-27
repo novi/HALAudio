@@ -15,9 +15,8 @@ public enum AudioConverterPropertyError: Error {
     case noPropertyFound(prop: AudioConverterPropertyID)
 }
 
-
+@AudioConverterActor
 extension AudioConverterPropertyType {
-    
     
     public func decompressionMagicCookie(_ bytes: [UInt8]) throws {
         try setProperty(bytes: bytes, prop: kAudioConverterDecompressionMagicCookie)

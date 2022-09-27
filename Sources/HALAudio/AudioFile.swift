@@ -8,10 +8,17 @@
 
 import AudioToolbox
 
-public protocol AudioFilePropertyType {
-    var audioFile: AudioFileID { get }
+@globalActor
+public struct AudioFilePropertyActor {
+  public actor Actor {}
+  public static let shared = Actor()
 }
 
+public protocol AudioFilePropertyType {
+    @AudioFilePropertyActor var audioFile: AudioFileID { get }
+}
+
+@AudioFilePropertyActor
 extension AudioFilePropertyType {
     
     func getProperty<T>(_ prop: AudioFilePropertyID) throws -> T {

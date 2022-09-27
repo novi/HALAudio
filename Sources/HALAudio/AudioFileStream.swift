@@ -23,9 +23,10 @@ public enum AudioFileStreamError: Error {
     case openError(OSStatus)
 }
 
+@AudioFileStreamActor
 extension AudioFileStreamPropertyType {
     
-    @AudioFileStreamActor
+    
     func getProperty<T>(_ prop: AudioFileStreamPropertyID) throws -> T {
         guard let val: T = try getPropertyArray(prop).first else {
             throw AudioFileStreamPropertyError.noPropertyFound(prop: prop)
@@ -33,7 +34,6 @@ extension AudioFileStreamPropertyType {
         return val
     }
     
-    @AudioFileStreamActor
     func getPropertyArray<T>(_ prop: AudioFileStreamPropertyID) throws -> [T] {
         
         var dataSize: UInt32 = 0
@@ -58,7 +58,6 @@ extension AudioFileStreamPropertyType {
         return (0..<count).map { data[$0] }
     }
     
-    @AudioFileStreamActor
     func setProperty<T>(data: T, prop: AudioFileStreamPropertyID) throws {
         let size = UInt32(MemoryLayout<T>.size)
         var buffer = data

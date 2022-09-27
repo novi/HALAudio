@@ -8,6 +8,12 @@
 
 import CoreAudio
 
+@globalActor
+public struct AudioObjectActor {
+  public actor Actor {}
+  public static let shared = Actor()
+}
+
 public protocol AudioObjectPropertyDataType {
 }
 
@@ -39,20 +45,21 @@ public enum AudioObjectPropertyError: Error {
 }
 
 public protocol AudioObjectType: CustomStringConvertible {
-    var id: AudioObjectID { get }
+    @AudioObjectActor var id: AudioObjectID { get }
 }
 
 public protocol AudioObjectPropertyAddressType {
     associatedtype DataType: AudioObjectPropertyDataType
     
-    var propertyAddress: AudioObjectPropertyAddress { get }
+    @AudioObjectActor var propertyAddress: AudioObjectPropertyAddress { get }
 }
 
 public protocol AudioObjectPropertyAddressTypeElementMaster: AudioObjectPropertyAddressType {
-    var propertySelector: AudioObjectPropertySelector { get }
-    var propertyScope: AudioObjectPropertyScope { get }
+    @AudioObjectActor var propertySelector: AudioObjectPropertySelector { get }
+    @AudioObjectActor var propertyScope: AudioObjectPropertyScope { get }
 }
 
+@AudioObjectActor
 public extension AudioObjectPropertyAddressTypeElementMaster {
     var propertyAddress: AudioObjectPropertyAddress {
         return AudioObjectPropertyAddress(mSelector: propertySelector,
@@ -65,6 +72,7 @@ public extension AudioObjectPropertyAddressTypeElementMaster {
     }
 }
 
+@AudioObjectActor
 public extension AudioObjectType {
     
     func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> T.DataType {

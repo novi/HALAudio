@@ -14,6 +14,7 @@ public enum ExtAudioFilePropertyError: Error {
     case noPropertyFound
 }
 
+@ExtAudioFileActor
 public extension ExtAudioFilePropertyType {
     
     func fileDataFormat() throws -> AudioStreamBasicDescription {

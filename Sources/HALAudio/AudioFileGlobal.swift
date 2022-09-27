@@ -8,15 +8,21 @@
 
 import AudioToolbox
 
+@globalActor
+public struct AudioFileGlobalActor {
+  public actor Actor {}
+  public static let shared = Actor()
+}
+
 public protocol AudioFileGlobalProperty {
     //associatedtype DataType
     associatedtype RawDataType
     associatedtype SpecifierType
-    var propertyID: AudioFilePropertyID { get }
-    var specifier: SpecifierType? { get }
-    var specifierSize: Int { get }
+    @AudioFileGlobalActor var propertyID: AudioFilePropertyID { get }
+    @AudioFileGlobalActor var specifier: SpecifierType? { get }
+    @AudioFileGlobalActor var specifierSize: Int { get }
     
-    func get() throws -> Self.RawDataType
+    @AudioFileGlobalActor func get() throws -> Self.RawDataType
 }
 
 public enum AudioFileGlobalError: Error {
@@ -25,6 +31,7 @@ public enum AudioFileGlobalError: Error {
     //case propertyDataCastError(data: Any, toType: Any)
 }
 
+@AudioFileGlobalActor
 extension AudioFileGlobalProperty {
 
     public func get() throws -> Self.RawDataType {

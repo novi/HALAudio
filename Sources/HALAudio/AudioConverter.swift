@@ -8,8 +8,14 @@
 
 import AudioToolbox
 
+@globalActor
+public struct AudioConverterActor {
+  public actor Actor {}
+  public static let shared = Actor()
+}
+
 public protocol AudioConverterType {
-    var converter: AudioConverterRef { get }
+    @AudioConverterActor var converter: AudioConverterRef { get }
 }
 
 public enum AudioConverterError: Error {
@@ -17,10 +23,11 @@ public enum AudioConverterError: Error {
 }
 
 public protocol AudioConverterPropertyType {
-    var converter: AudioConverterRef { get }
+    @AudioConverterActor var converter: AudioConverterRef { get }
 }
 
 
+@AudioConverterActor 
 extension AudioConverterPropertyType {
     
     func getProperty<T>(_ prop: AudioConverterPropertyID) throws -> T {

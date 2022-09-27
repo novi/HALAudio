@@ -8,12 +8,18 @@
 
 import AudioToolbox
 
+@globalActor
+public struct ExtAudioFileActor {
+  public actor Actor {}
+  public static let shared = Actor()
+}
+
 public protocol ExtAudioFilePropertyType {
-    var audioFile: ExtAudioFileRef { get }
+    @ExtAudioFileActor var audioFile: ExtAudioFileRef { get }
 }
 
 public protocol ExtAudioFileType {
-    var audioFile: ExtAudioFileRef { get }
+    @ExtAudioFileActor var audioFile: ExtAudioFileRef { get }
 }
 
 public enum ExtAudioFileError: Error {
@@ -22,6 +28,7 @@ public enum ExtAudioFileError: Error {
     case seekError(OSStatus)
 }
 
+@ExtAudioFileActor
 public extension ExtAudioFileType {
     
     static func open(fromURL url: NSURL) throws -> ExtAudioFileRef {
@@ -55,6 +62,7 @@ public extension ExtAudioFileType {
     
 }
 
+@ExtAudioFileActor
 public extension ExtAudioFilePropertyType {
     func getProperty<T>(_ prop: ExtAudioFilePropertyID) throws -> T {
         var size = UInt32(MemoryLayout<T>.size)

@@ -10,6 +10,7 @@ import XCTest
 @testable import HALAudio
 import AudioToolbox
 
+@AudioFileGlobalActor
 final class AudioFileGlobalTests: XCTestCase {
 
     

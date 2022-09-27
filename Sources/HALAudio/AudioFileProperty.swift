@@ -14,6 +14,7 @@ public enum AudioFilePropertyError: Error {
     case noPropertyFound
 }
 
+@AudioFilePropertyActor
 public extension AudioFilePropertyType {
     
     func fileFormat() throws -> AudioFileTypeID {
