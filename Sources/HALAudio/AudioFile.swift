@@ -15,7 +15,7 @@ public struct AudioFilePropertyActor {
 }
 
 public protocol AudioFilePropertyType {
-    @AudioFilePropertyActor var audioFile: AudioFileID { get }
+    var audioFile: AudioFileID { get }
 }
 
 @AudioFilePropertyActor

@@ -15,7 +15,7 @@ public struct AudioConverterActor {
 }
 
 public protocol AudioConverterType {
-    @AudioConverterActor var converter: AudioConverterRef { get }
+    var converter: AudioConverterRef { get }
 }
 
 public enum AudioConverterError: Error {
@@ -23,7 +23,7 @@ public enum AudioConverterError: Error {
 }
 
 public protocol AudioConverterPropertyType {
-    @AudioConverterActor var converter: AudioConverterRef { get }
+    var converter: AudioConverterRef { get }
 }
 
 

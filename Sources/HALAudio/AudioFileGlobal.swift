@@ -18,9 +18,9 @@ public protocol AudioFileGlobalProperty {
     //associatedtype DataType
     associatedtype RawDataType
     associatedtype SpecifierType
-    @AudioFileGlobalActor var propertyID: AudioFilePropertyID { get }
-    @AudioFileGlobalActor var specifier: SpecifierType? { get }
-    @AudioFileGlobalActor var specifierSize: Int { get }
+    var propertyID: AudioFilePropertyID { get }
+    var specifier: SpecifierType? { get }
+    var specifierSize: Int { get }
     
     @AudioFileGlobalActor func get() throws -> Self.RawDataType
 }

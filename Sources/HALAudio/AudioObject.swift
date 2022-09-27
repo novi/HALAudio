@@ -45,13 +45,13 @@ public enum AudioObjectPropertyError: Error {
 }
 
 public protocol AudioObjectType: CustomStringConvertible {
-    @AudioObjectActor var id: AudioObjectID { get }
+    var id: AudioObjectID { get }
 }
 
 public protocol AudioObjectPropertyAddressType {
     associatedtype DataType: AudioObjectPropertyDataType
     
-    @AudioObjectActor var propertyAddress: AudioObjectPropertyAddress { get }
+    var propertyAddress: AudioObjectPropertyAddress { get }
 }
 
 public protocol AudioObjectPropertyAddressTypeElementMaster: AudioObjectPropertyAddressType {
@@ -158,7 +158,7 @@ public extension AudioObjectType {
         }
     }
     
-    var description: String {
+    nonisolated var description: String {
         return "\(id)"
     }
 }

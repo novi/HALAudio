@@ -16,7 +16,7 @@ public struct AudioFileStreamActor {
 
 
 public protocol AudioFileStreamPropertyType {
-    @AudioFileStreamActor var audioStream: AudioFileStreamID { get }
+    var audioStream: AudioFileStreamID { get }
 }
 
 public enum AudioFileStreamError: Error {

@@ -15,11 +15,11 @@ public struct ExtAudioFileActor {
 }
 
 public protocol ExtAudioFilePropertyType {
-    @ExtAudioFileActor var audioFile: ExtAudioFileRef { get }
+    var audioFile: ExtAudioFileRef { get }
 }
 
 public protocol ExtAudioFileType {
-    @ExtAudioFileActor var audioFile: ExtAudioFileRef { get }
+    var audioFile: ExtAudioFileRef { get }
 }
 
 public enum ExtAudioFileError: Error {
