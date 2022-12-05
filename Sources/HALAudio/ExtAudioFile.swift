@@ -7,10 +7,11 @@
 //
 
 import AudioToolbox
+import NIOConcurrencyHelpers
 
 public protocol ExtAudioFilePropertyType {
     var audioFile: ExtAudioFileRef { get }
-    var lock: UnfairLock { get }
+    var lock: NIOLock { get }
 }
 
 public protocol ExtAudioFileType {
@@ -59,7 +60,7 @@ public extension ExtAudioFileType {
 
 public extension ExtAudioFilePropertyType {
     func getProperty<T>(_ prop: ExtAudioFilePropertyID) throws -> T {
-        try lock.sync {
+        try lock.withLock {
             var size = UInt32(MemoryLayout<T>.size)
             let data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
             defer {
@@ -75,7 +76,7 @@ public extension ExtAudioFilePropertyType {
     }
     
     func setProperty<T>(data: T, prop: ExtAudioFilePropertyID) throws {
-        try lock.sync {
+        try lock.withLockVoid {
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
             let status = ExtAudioFileSetProperty(audioFile, prop, size, &buffer)

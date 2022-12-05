@@ -7,6 +7,7 @@
 //
 
 import CoreAudio
+import NIOConcurrencyHelpers
 
 public protocol AudioObjectPropertyDataType {
 }
@@ -40,7 +41,7 @@ public enum AudioObjectPropertyError: Error {
 
 public protocol AudioObjectType: CustomStringConvertible {
     var id: AudioObjectID { get }
-    var lock: UnfairLock { get }
+    var lock: NIOLock { get }
 }
 
 public protocol AudioObjectPropertyAddressType {
@@ -76,7 +77,7 @@ public extension AudioObjectType {
     }
     
     func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> [T.DataType] {
-        try lock.sync {
+        try lock.withLock {
             var propAddr = addr.propertyAddress
             
             var propSize: UInt32 = 0
@@ -123,7 +124,7 @@ public extension AudioObjectType {
     }
     
     func set<T: AudioObjectPropertyAddressType>(values: [T.DataType], forAddr addr: T) throws {
-        try lock.sync {
+        try lock.withLockVoid {
             var propAddr = addr.propertyAddress
             
             let propSize = MemoryLayout<T.DataType>.size * values.count

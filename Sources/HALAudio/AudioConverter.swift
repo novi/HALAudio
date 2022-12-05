@@ -7,6 +7,7 @@
 //
 
 import AudioToolbox
+import NIOConcurrencyHelpers
 
 public protocol AudioConverterType {
     var converter: AudioConverterRef { get }
@@ -19,7 +20,7 @@ public enum AudioConverterError: Error {
 
 public protocol AudioConverterPropertyType {
     var converter: AudioConverterRef { get }
-    var lock: UnfairLock { get }
+    var lock: NIOLock { get }
 }
 
 
@@ -32,7 +33,7 @@ extension AudioConverterPropertyType {
         return val
     }
     func getPropertyArray<T>(_ prop: AudioConverterPropertyID) throws -> [T] {
-        try lock.sync {
+        try lock.withLock {
             var dataSize: UInt32 = 0
             var writable: DarwinBoolean = false
             let sizeStatus = AudioConverterGetPropertyInfo(converter, prop, &dataSize, &writable)
@@ -57,7 +58,7 @@ extension AudioConverterPropertyType {
     }
     
     func setProperty<T>(data: T, prop: AudioConverterPropertyID) throws {
-        try lock.sync {
+        try lock.withLockVoid {
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
             let status = AudioConverterSetProperty(converter, prop, size, &buffer)
@@ -68,7 +69,7 @@ extension AudioConverterPropertyType {
     }
     
     func setProperty(bytes: [UInt8], prop: AudioConverterPropertyID) throws {
-        try lock.sync {
+        try lock.withLockVoid {
             var buffer = bytes
             let status = AudioConverterSetProperty(converter, prop, UInt32(bytes.count), &buffer)
             guard status == 0 else {

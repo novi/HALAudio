@@ -7,10 +7,11 @@
 //
 
 import AudioToolbox
+import NIOConcurrencyHelpers
 
 public protocol AudioFileStreamPropertyType {
     var audioStream: AudioFileStreamID { get }
-    var lock: UnfairLock { get }
+    var lock: NIOLock { get }
 }
 
 public enum AudioFileStreamError: Error {
@@ -26,7 +27,7 @@ extension AudioFileStreamPropertyType {
         return val
     }
     func getPropertyArray<T>(_ prop: AudioFileStreamPropertyID) throws -> [T] {
-        try lock.sync {
+        try lock.withLock {
             var dataSize: UInt32 = 0
             var writable: DarwinBoolean = false
             let sizeStatus = AudioFileStreamGetPropertyInfo(audioStream, prop, &dataSize, &writable)
@@ -51,7 +52,7 @@ extension AudioFileStreamPropertyType {
     }
     
     func setProperty<T>(data: T, prop: AudioFileStreamPropertyID) throws {
-        try lock.sync {
+        try lock.withLockVoid {
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
             let status = AudioFileStreamSetProperty(audioStream, prop, size, &buffer)

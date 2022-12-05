@@ -7,16 +7,17 @@
 //
 
 import AudioToolbox
+import NIOConcurrencyHelpers
 
 public protocol AudioFilePropertyType {
     var audioFile: AudioFileID { get }
-    var lock: UnfairLock { get }
+    var lock: NIOLock { get }
 }
 
 extension AudioFilePropertyType {
     
     func getProperty<T>(_ prop: AudioFilePropertyID) throws -> T {
-        try lock.sync {
+        try lock.withLock {
             var size = UInt32(MemoryLayout<T>.size)
             let data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
             defer {
@@ -32,7 +33,7 @@ extension AudioFilePropertyType {
     }
     
     func setProperty<T>(data: T, prop: AudioFilePropertyID) throws {
-        try lock.sync {
+        try lock.withLockVoid {
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
             let status = AudioFileSetProperty(audioFile, prop, size, &buffer)

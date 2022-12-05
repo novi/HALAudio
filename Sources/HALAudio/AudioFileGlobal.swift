@@ -7,6 +7,7 @@
 //
 
 import AudioToolbox
+import NIOConcurrencyHelpers
 
 public protocol AudioFileGlobalProperty {
     //associatedtype DataType
@@ -25,12 +26,12 @@ public enum AudioFileGlobalError: Error {
     //case propertyDataCastError(data: Any, toType: Any)
 }
 
-internal let GlobalLock = UnfairLock()
+internal let HALAudioGlobalLock = NIOLock()
 
 extension AudioFileGlobalProperty {
 
     public func get() throws -> Self.RawDataType {
-        try GlobalLock.sync {
+        try HALAudioGlobalLock.withLock {
             var outDataSize: UInt32 = 0
             var specifierIn = specifier
             let statusSize = AudioFileGetGlobalInfoSize(propertyID,
