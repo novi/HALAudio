@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "HALAudio",
-    platforms: [.macOS(.v10_15)],
+    platforms: [.macOS(.v10_13)],
     products: [
         .library(
             name: "HALAudio",
