@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.10
 
 import PackageDescription
 
@@ -11,7 +11,7 @@ let package = Package(
             targets: ["HALAudio"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-nio.git", from: "2.0.0")
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.94.1")
     ],
     targets: [
         .target(
