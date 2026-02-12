@@ -60,7 +60,9 @@ extension AudioConverterPropertyType {
         try lock.withLockVoid {
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
-            let status = AudioConverterSetProperty(converter, prop, size, &buffer)
+            let status = withUnsafePointer(to: &buffer) { ptr in
+                AudioConverterSetProperty(converter, prop, size, ptr)
+            }
             guard status == 0 else {
                 throw AudioConverterPropertyError.setPropertyError(prop: prop, code: status)
             }
@@ -69,12 +71,19 @@ extension AudioConverterPropertyType {
     
     func setProperty(bytes: [UInt8], prop: AudioConverterPropertyID) throws {
         try lock.withLockVoid {
-            var buffer = bytes
-            let status = AudioConverterSetProperty(converter, prop, UInt32(bytes.count), &buffer)
+            let buffer = bytes
+            let status: OSStatus
+            if buffer.isEmpty {
+                var zero: UInt8 = 0
+                status = AudioConverterSetProperty(converter, prop, 0, &zero)
+            } else {
+                status = buffer.withUnsafeBytes { rawBuffer in
+                    AudioConverterSetProperty(converter, prop, UInt32(buffer.count), rawBuffer.baseAddress!)
+                }
+            }
             guard status == 0 else {
                 throw AudioConverterPropertyError.setPropertyError(prop: prop, code: status)
             }
         }
     }
 }
-

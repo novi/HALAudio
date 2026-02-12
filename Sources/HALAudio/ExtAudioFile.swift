@@ -78,7 +78,9 @@ public extension ExtAudioFilePropertyType {
         try lock.withLockVoid {
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
-            let status = ExtAudioFileSetProperty(audioFile, prop, size, &buffer)
+            let status = withUnsafePointer(to: &buffer) { ptr in
+                ExtAudioFileSetProperty(audioFile, prop, size, ptr)
+            }
             guard status == 0 else {
                 throw ExtAudioFilePropertyError.setPropertyError(prop: prop, code: status)
             }

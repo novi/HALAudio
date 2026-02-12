@@ -32,11 +32,12 @@ extension AudioFileGlobalProperty {
     public func get() throws -> Self.RawDataType {
         try HALAudioGlobalLock.withLock {
             var outDataSize: UInt32 = 0
-            var specifierIn = specifier
-            let statusSize = AudioFileGetGlobalInfoSize(propertyID,
-                                                        UInt32(specifierSize),
-                                                        &specifierIn,
-                                                        &outDataSize)
+            let statusSize: OSStatus = withSpecifierPointer {
+                AudioFileGetGlobalInfoSize(propertyID,
+                                           UInt32(specifierSize),
+                                           $0,
+                                           &outDataSize)
+            }
             guard statusSize == OSStatus(0) else {
                 throw AudioFileGlobalError.getPropertyError(code: statusSize)
             }
@@ -51,11 +52,13 @@ extension AudioFileGlobalProperty {
                 free(memory)
             }
             
-            let statusData = AudioFileGetGlobalInfo(propertyID,
-                                                    UInt32(specifierSize),
-                                                    &specifierIn,
-                                                    &outDataSize,
-                                                    memory)
+            let statusData: OSStatus = withSpecifierPointer {
+                AudioFileGetGlobalInfo(propertyID,
+                                       UInt32(specifierSize),
+                                       $0,
+                                       &outDataSize,
+                                       memory)
+            }
             
             guard statusData == OSStatus(0) else {
                 throw AudioFileGlobalError.getPropertyError(code: statusData)
@@ -65,6 +68,15 @@ extension AudioFileGlobalProperty {
                 throw AudioFileGlobalError.propertyDataCastError(data: memory.pointee, toType: Self.DataType.self)
             }*/
             return memory.pointee
+        }
+    }
+
+    private func withSpecifierPointer<T>(_ body: (UnsafeMutableRawPointer?) -> T) -> T {
+        guard specifierSize > 0, var specifierValue = specifier else {
+            return body(nil)
+        }
+        return withUnsafeMutablePointer(to: &specifierValue) { pointer in
+            body(pointer)
         }
     }
 

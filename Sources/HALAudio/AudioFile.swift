@@ -35,7 +35,9 @@ extension AudioFilePropertyType {
         try lock.withLockVoid {
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
-            let status = AudioFileSetProperty(audioFile, prop, size, &buffer)
+            let status = withUnsafePointer(to: &buffer) { ptr in
+                AudioFileSetProperty(audioFile, prop, size, ptr)
+            }
             guard status == 0 else {
                 throw AudioFilePropertyError.setPropertyError(prop: prop, code: status)
             }
