@@ -16,7 +16,7 @@ public protocol AudioFilePropertyType {
 extension AudioFilePropertyType {
     
     func getProperty<T>(_ prop: AudioFilePropertyID) throws -> T {
-        try lock.withLock {
+        try lock.withLock { _ in
             var size = UInt32(MemoryLayout<T>.size)
             let data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
             defer {
@@ -32,7 +32,7 @@ extension AudioFilePropertyType {
     }
     
     func setProperty<T>(data: T, prop: AudioFilePropertyID) throws {
-        try lock.withLockVoid {
+        try lock.withLock { _ in
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
             let status = withUnsafePointer(to: &buffer) { ptr in

@@ -59,7 +59,7 @@ public extension ExtAudioFileType {
 
 public extension ExtAudioFilePropertyType {
     func getProperty<T>(_ prop: ExtAudioFilePropertyID) throws -> T {
-        try lock.withLock {
+        try lock.withLock { _ in
             var size = UInt32(MemoryLayout<T>.size)
             let data = unsafeBitCast(calloc(1, Int(size)), to: UnsafeMutablePointer<T>.self)
             defer {
@@ -75,7 +75,7 @@ public extension ExtAudioFilePropertyType {
     }
     
     func setProperty<T>(data: T, prop: ExtAudioFilePropertyID) throws {
-        try lock.withLockVoid {
+        try lock.withLock { _ in
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
             let status = withUnsafePointer(to: &buffer) { ptr in

@@ -30,7 +30,7 @@ internal let HALAudioGlobalLock = HALAudioLock(())
 extension AudioFileGlobalProperty {
 
     public func get() throws -> Self.RawDataType {
-        try HALAudioGlobalLock.withLock {
+        try HALAudioGlobalLock.withLock { _ in
             var outDataSize: UInt32 = 0
             let statusSize: OSStatus = withSpecifierPointer {
                 AudioFileGetGlobalInfoSize(propertyID,

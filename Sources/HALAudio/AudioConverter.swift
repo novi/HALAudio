@@ -32,7 +32,7 @@ extension AudioConverterPropertyType {
         return val
     }
     func getPropertyArray<T>(_ prop: AudioConverterPropertyID) throws -> [T] {
-        try lock.withLock {
+        try lock.withLock { _ in
             var dataSize: UInt32 = 0
             var writable: DarwinBoolean = false
             let sizeStatus = AudioConverterGetPropertyInfo(converter, prop, &dataSize, &writable)
@@ -57,7 +57,7 @@ extension AudioConverterPropertyType {
     }
     
     func setProperty<T>(data: T, prop: AudioConverterPropertyID) throws {
-        try lock.withLockVoid {
+        try lock.withLock { _ in
             let size = UInt32(MemoryLayout<T>.size)
             var buffer = data
             let status = withUnsafePointer(to: &buffer) { ptr in
@@ -70,7 +70,7 @@ extension AudioConverterPropertyType {
     }
     
     func setProperty(bytes: [UInt8], prop: AudioConverterPropertyID) throws {
-        try lock.withLockVoid {
+        try lock.withLock { _ in
             let buffer = bytes
             let status: OSStatus
             if buffer.isEmpty {

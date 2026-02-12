@@ -76,7 +76,7 @@ public extension AudioObjectType {
     }
     
     func get<T: AudioObjectPropertyAddressType>(addr: T) throws -> [T.DataType] {
-        try lock.withLock {
+        try lock.withLock { _ in
             var propAddr = addr.propertyAddress
             
             var propSize: UInt32 = 0
@@ -123,7 +123,7 @@ public extension AudioObjectType {
     }
     
     func set<T: AudioObjectPropertyAddressType>(values: [T.DataType], forAddr addr: T) throws {
-        try lock.withLockVoid {
+        try lock.withLock { _ in
             var propAddr = addr.propertyAddress
             
             let propSize = MemoryLayout<T.DataType>.size * values.count
