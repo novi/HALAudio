@@ -7,7 +7,6 @@
 //
 
 import CoreAudio
-import NIOConcurrencyHelpers
 
 public protocol AudioObjectPropertyDataType {
 }
@@ -41,7 +40,7 @@ public enum AudioObjectPropertyError: Error {
 
 public protocol AudioObjectType: CustomStringConvertible {
     var id: AudioObjectID { get }
-    var lock: NIOLock { get }
+    var lock: HALAudioLock { get }
 }
 
 public protocol AudioObjectPropertyAddressType {

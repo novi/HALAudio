@@ -7,7 +7,6 @@
 //
 
 import AudioToolbox
-import NIOConcurrencyHelpers
 
 public protocol AudioFileGlobalProperty {
     //associatedtype DataType
@@ -26,7 +25,7 @@ public enum AudioFileGlobalError: Error {
     //case propertyDataCastError(data: Any, toType: Any)
 }
 
-internal let HALAudioGlobalLock = NIOLock()
+internal let HALAudioGlobalLock = HALAudioLock(())
 
 extension AudioFileGlobalProperty {
 

@@ -7,11 +7,10 @@
 //
 
 import AudioToolbox
-import NIOConcurrencyHelpers
 
 public protocol AudioFileStreamPropertyType {
     var audioStream: AudioFileStreamID { get }
-    var lock: NIOLock { get }
+    var lock: HALAudioLock { get }
 }
 
 public enum AudioFileStreamError: Error {

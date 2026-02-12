@@ -7,7 +7,6 @@
 //
 
 import AudioToolbox
-import NIOConcurrencyHelpers
 
 public protocol AudioConverterType {
     var converter: AudioConverterRef { get }
@@ -20,7 +19,7 @@ public enum AudioConverterError: Error {
 
 public protocol AudioConverterPropertyType {
     var converter: AudioConverterRef { get }
-    var lock: NIOLock { get }
+    var lock: HALAudioLock { get }
 }
 
 
@@ -78,5 +77,4 @@ extension AudioConverterPropertyType {
         }
     }
 }
-
 

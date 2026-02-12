@@ -7,11 +7,10 @@
 //
 
 import AudioToolbox
-import NIOConcurrencyHelpers
 
 public protocol ExtAudioFilePropertyType {
     var audioFile: ExtAudioFileRef { get }
-    var lock: NIOLock { get }
+    var lock: HALAudioLock { get }
 }
 
 public protocol ExtAudioFileType {

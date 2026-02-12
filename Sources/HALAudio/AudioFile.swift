@@ -7,11 +7,10 @@
 //
 
 import AudioToolbox
-import NIOConcurrencyHelpers
 
 public protocol AudioFilePropertyType {
     var audioFile: AudioFileID { get }
-    var lock: NIOLock { get }
+    var lock: HALAudioLock { get }
 }
 
 extension AudioFilePropertyType {
