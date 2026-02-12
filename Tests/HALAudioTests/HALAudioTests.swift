@@ -8,6 +8,35 @@
 
 import XCTest
 @testable import HALAudio
+import AudioToolbox
+
+private let audioSytemObjectLock = HALAudioLock(())
+
+
+struct AudioSytemObject1: AudioObjectType {
+    let id: AudioObjectID
+    var lock: HALAudioLock {
+        _read {
+            yield audioSytemObjectLock
+        }
+    }
+    init() {
+        id = AudioObjectID(kAudioObjectSystemObject)
+    }
+}
+
+struct AudioSytemObject2: AudioObjectType {
+    let id: AudioObjectID
+    var lock: HALAudioLock {
+        _read {
+            yield audioSytemObjectLock
+        }
+    }
+    init() {
+        id = AudioObjectID(kAudioObjectSystemObject)
+    }
+}
+
 
 final class HALAudioTests: XCTestCase {
     

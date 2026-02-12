@@ -38,7 +38,7 @@ public enum AudioObjectPropertyError: Error {
     case noPropertyFound
 }
 
-public protocol AudioObjectType: CustomStringConvertible {
+public protocol AudioObjectType {
     var id: AudioObjectID { get }
     var lock: HALAudioLock { get }
 }
@@ -151,9 +151,5 @@ public extension AudioObjectType {
                 throw AudioObjectPropertyError.setPropertyError(code: status)
             }
         }
-    }
-    
-    var description: String {
-        return "\(id)"
     }
 }
