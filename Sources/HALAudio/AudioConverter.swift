@@ -26,7 +26,8 @@ public protocol AudioConverterPropertyType {
 extension AudioConverterPropertyType {
     
     func getProperty<T>(_ prop: AudioConverterPropertyID) throws -> T {
-        guard let val: T = try getPropertyArray(prop).first else {
+        let values: [T] = try getPropertyArray(prop)
+        guard let val = values.first else {
             throw AudioConverterPropertyError.noPropertyFound(prop: prop)
         }
         return val
